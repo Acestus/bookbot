@@ -1,12 +1,23 @@
+from stats import get_num_words, get_letter_count
+
 def main(): 
-    char_count = {}
     with open("books/frankenstein.txt") as f:
         file_contents = f.read()
-        file_contents = file_contents.lower()
-        for char in file_contents:
-            char_count[char] = char_count.get(char, 0) + 1
-        only_letters = {k: v for k, v in char_count.items() if k.isalpha()}
-        for letter in only_letters:
-            print(f"The '{letter}' character was found {only_letters[letter]} times.")
+        
+        # Count words
+        word_count = get_num_words(file_contents)
+        print(f"--- Begin report of books/frankenstein.txt ---")
+        print(f"{word_count} words found in the document")
+        print()
+        
+        # Count letters
+        letter_count = get_letter_count(file_contents)
+        # Sort letters by frequency (descending)
+        sorted_letters = sorted(letter_count.items(), key=lambda x: x[1], reverse=True)
+        
+        for letter, count in sorted_letters:
+            print(f"The '{letter}' character was found {count} times")
+        
+        print("--- End report ---")
 
 main()
